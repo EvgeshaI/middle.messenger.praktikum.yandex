@@ -1,0 +1,28 @@
+<main class="settingsContainer">
+    {{> NavBar}}
+    <div class="settings">
+        <div class="settingsBlock">
+            <div class="settingAvatar">
+                {{> Avatar link="https://doodleipsum.com/700/avatar?i=7aa650776eee7ca68a32d5d808fc4f57"}}
+                <label class="customFileAvatar">
+                    <input class="inputFileAvatar" type="file" name="avatar">
+                    <img src="../../static/svg/camera.svg" alt="camera"/>
+                </label>
+            </div>
+            <div class="userInfo">
+                {{> SettingsInput title="Name" value="name" name="first_name"}}
+                {{> SettingsInput title="Second Name" value="second name" name="second_name"}}
+                {{> SettingsInput title="Display Name" value="nike-name" name="display_name"}}
+                {{> SettingsInput title="Email" value="email.@mail.com" name="email"}}
+                {{> SettingsInput title="Login" value="login" name="login"}}
+                {{> SettingsInput title="Phone" value="+12334566" name="phone"}}
+            </div>
+            <div class="passwordSetting">
+                {{> SettingsInput title="Old password" type="password" name="oldPassword"}}
+                {{> SettingsInput title="New password" type="password" name="newPassword"}}
+                {{> SettingsInput title="Confirm new password" type="password"}}
+            </div>
+            {{> Button text="Save"}}
+        </div>
+    </div>
+</main>

@@ -1,0 +1,45 @@
+@import "../../static/constantStyles";
+.settingsContainer{
+  padding: 10px;
+  @include flexElement (row);
+  .settings{
+    margin-left: 10px;
+    @include contentBlock($width: 95%);
+    height: $heightScreen;
+    .settingsBlock{
+      background: $backgroundBlock;
+      @include flexElement (column);
+      .settingAvatar{
+        position: relative;
+        border-radius: 50%;
+        input[type="file"] {
+          display: none;
+        }
+        .customFileAvatar{
+          position: absolute;
+          right: -30%;
+          top: 80%;
+          background: transparent;
+          cursor: pointer;
+          img {
+            width: 20px;
+            background: transparent;
+          }
+        }
+      }
+    }
+    .userInfo{
+      width: 70%;
+      margin: auto;
+      background: inherit;
+    }
+    .passwordSetting{
+      width: 50%;
+      margin: auto;
+      background: inherit;
+      > div {
+        font-size: 14px;
+      }
+    }
+  }
+}

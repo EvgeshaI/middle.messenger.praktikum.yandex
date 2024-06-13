@@ -1,0 +1,34 @@
+@import "../../static/constantStyles";
+
+@mixin iconStyle {
+  width: 60%;
+  background: $accentBackground;
+  cursor: pointer;
+}
+@mixin navigationBlock {
+  @include flexElement (column);
+  background: $accentBackground;
+}
+
+.navbar{
+  height: $heightScreen;
+  width: 70px;
+  background: $accentBackground;
+  border-radius: 25px;
+  @include flexElement (column);
+  padding: 20px 0;
+  .navigation{
+    height: 30%;
+    @include navigationBlock;
+    img{
+      @include iconStyle;
+      margin-bottom: 20px;
+    }
+  }
+  .logout{
+    @include navigationBlock;
+    img{
+      @include iconStyle
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@import "../../static/constantStyles";
+
+.loginContent {
+  @include contentBlock($width: 400px);
+  @include formBlock
+}
+.inputsBlock{
+  width: 90%;
+  margin: auto;
+  background: #FFFFFF;
+}

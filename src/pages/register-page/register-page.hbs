@@ -1,0 +1,19 @@
+<form class="loginContent">
+    <header>
+        {{> Title text="Registration"}}
+    </header>
+        <div class="inputs">
+            {{> InputField  title="E-mail" name="email" placeholder="e-mail"}}
+            {{> InputField  title="Login" name="login" placeholder="login"}}
+            {{> InputField  title="Name" name="first_name" placeholder="name"}}
+            {{> InputField  title="SecondName" name="second_name" placeholder="second name"}}
+            {{> InputField  title="Phone" name="phone" placeholder="phone"}}
+            {{> InputField  title="Password" name="password" type="password" placeholder="password"}}
+            {{> InputField  title="ConfirmPassword" name="confirm_password" type="password" placeholder="confirm password"}}
+        </div>
+    <footer class="loginFooter">
+        {{> Button text="Register" page="chat"}}
+        {{> LinkText text="Login" page="login"}}
+    </footer>
+</form>
+
