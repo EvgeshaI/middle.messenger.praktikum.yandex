@@ -2,7 +2,7 @@
   "name": "yandex-chat",
   "version": "1.0.0",
   "type": "module",
-  "node": "v18.20.3",
+  "node": "18.20.3",
   "scripts": {
     "dev": "vite --port 3000",
     "build": "vite build",
