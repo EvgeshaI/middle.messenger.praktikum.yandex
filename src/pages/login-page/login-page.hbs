@@ -1,0 +1,15 @@
+<form class="loginContent">
+    <header>
+        {{> Title text="Login"}}
+    </header>
+        <div class="inputs">
+            {{> InputField  title="Login" name="login" placeholder="login"}}
+            {{> InputField  title="Password" name="password" type="password" placeholder="password"}}
+        </div>
+    <footer class="loginFooter">
+        {{> Button text="Sign in" page="chat"}}
+        {{> LinkText text="Create account" page="register"}}
+    </footer>
+</form>
+
+

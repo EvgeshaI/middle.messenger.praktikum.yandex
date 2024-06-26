@@ -1,0 +1,25 @@
+{
+  "name": "yandex-chat",
+  "version": "1.0.0",
+  "type": "module",
+  "node": "18.20.3",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "build": "vite build",
+    "preview": "vite preview --port 3000",
+    "start": "npm run build && node server.cjs"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "devDependencies": {
+    "sass": "^1.77.5",
+    "vite": "^5.2.0",
+    "vite-plugin-static-copy": "^1.0.5"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "handlebars": "^4.7.8",
+    "vite-plugin-handlebars": "^2.0.0"
+  }
+}

@@ -1,0 +1,27 @@
+@import "../../static/constantStyles";
+
+.settingItem{
+  @include flexElement (row);
+  padding: 10px;
+  background: inherit;
+  border-bottom: 1px solid #B4ABAB;
+  margin-bottom: 10px;
+  .settingTitle{
+    width: 20%;
+    background: inherit;
+    color: #303030;
+  }
+  .settingInput{
+    width: 80%;
+    background: inherit;
+    input{
+      width: 100%;
+      padding: 5px;
+      background: inherit;
+      border: none;
+      text-align: right;
+      color: #B4ABAB;
+      outline: none;
+    }
+  }
+}

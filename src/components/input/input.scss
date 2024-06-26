@@ -1,0 +1,17 @@
+.inputStyle {
+  margin-bottom: 20px;
+  input {
+    background: #FFFFFF;
+    font-size: 18px;
+    border: none;
+    border-bottom: 1px solid #B4ABAB;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    &::placeholder{
+      color: #B4ABAB;
+      font-size: 16px;
+    }
+  }
+}

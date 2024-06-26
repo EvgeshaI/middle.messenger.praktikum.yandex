@@ -1,0 +1,15 @@
+@import "../../static/constantStyles";
+
+.button {
+  height: 40px;
+  width: 40%;
+  margin: 20px auto 0;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 25px;
+  background-color: $accentBackground;
+  color: white;
+  border: 0;
+  cursor: pointer;
+}
+

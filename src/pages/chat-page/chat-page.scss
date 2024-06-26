@@ -1,0 +1,62 @@
+@import "../../static/constantStyles";
+
+@mixin listItems {
+  padding: 5px;
+  background: $backgroundBlock;
+  @include flexElement (column);
+  align-items: inherit;
+}
+
+.chatContainer{
+  padding: 10px;
+  @include flexElement (row);
+
+  .chatList{
+    width: 30%;
+    height: $heightScreen;
+    @include flexElement (column);
+    > div{
+      @include contentBlock($width: 100%)
+    }
+    .search{
+      display: flex;
+      padding: 10px;
+      img{
+        width: 20px;
+        margin-right: 20px;
+        background: $backgroundBlock;
+      }
+      div{
+        margin: 0;
+      }
+      .inputSearch{
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+    }
+    .groupList{
+      height: 35%;
+      overflow: hidden;
+      > div {
+        @include listItems
+      }
+    }
+    .contactList{
+      height: 55%;
+      overflow: hidden;
+      > div {
+        @include listItems
+      }
+    }
+    .list{
+      background: $backgroundBlock;
+    }
+  }
+  .chat{
+    @include contentBlock($width: 60%);
+    height: $heightScreen;
+    @include flexElement (column);
+    align-items: initial;
+  }
+}
