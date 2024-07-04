@@ -5,16 +5,20 @@
   align-items: center;
   box-sizing: border-box;
   padding: 5px;
-  margin-bottom: 5px;
-  background: inherit;
+  margin: 15px 0;
+  background: $backgroundBlock;
   border: 1px solid $backgroundBlock;
   color: $textColor;
   cursor: pointer;
+
   &:hover{
     border: 1px solid $accentBackground;
+    border-radius: 5px;
   }
+
   .avatarBlock{
     background: inherit;
+
     .avatar{
       width: 40px;
       height: 40px;
@@ -33,21 +37,25 @@
     width: 40%;
     font-size: 12px;
     overflow: hidden;
+
     .name{
       flex-wrap: nowrap;
       font-weight: bold;
       background: inherit;
     }
+
     .text{
       background: inherit;
       overflow: hidden;
     }
   }
+
   .messageInfo{
     background: inherit;
     width: 40%;
     font-size: 12px;
     text-align: right;
+
     >div{
       background: inherit;
     }

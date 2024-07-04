@@ -2,13 +2,17 @@
 
 .loginContent {
   text-align: center;
+
   @include contentBlock($width: 400px);
   @include formBlock
 }
+
 .inputs{
-  @include inputsBlock
+  @include inputsBlock;
 }
+
 .loginFooter{
   @include flexElement (column);
+
   background: $backgroundBlock;
 }
