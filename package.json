@@ -19,11 +19,12 @@
     "@typescript-eslint/parser": "^7.15.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
     "sass": "^1.77.5",
     "stylelint": "^16.6.1",
-    "vite-tsconfig-paths": "^4.3.2",
+    "typescript": "^5.5.2",
     "vite": "^5.3.3",
-    "typescript": "^5.5.2"
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "dependencies": {
     "express": "^4.19.2",
