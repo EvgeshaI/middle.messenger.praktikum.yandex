@@ -31,7 +31,6 @@
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-scss": "^6.3.2",
     "vite-plugin-checker": "^0.7.0",
-    "vite-plugin-static-copy": "^1.0.5",
-    "vite": "^5.3.3"
+    "vite-plugin-static-copy": "^1.0.5"
   }
 }
