@@ -4,15 +4,23 @@ const METHODS = {
   POST: 'POST',
   DELETE: 'DELETE',
 };
+type Methods = typeof METHODS[keyof typeof METHODS]
 
-function queryStringify(data) {
+interface RequestOptions {
+  headers?: Record<string, string>;
+  method?: Methods;
+  data?: any;
+  timeout?: number;
+}
+
+function queryStringify(data: Record<string, any>): string  {
   const str = [];
   for (const [key, value] of Object.entries(data)) {
     const k = key;
     if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
       str.push(`${k}=[object Object]`);
     } else if (Array.isArray(value)) {
-      str.push(`${k}=${value.join(',')}`);
+      str.push(`${k}=${value!.join(',')}`);
     } else {
       str.push(`${k}=${value}`);
     }
@@ -22,18 +30,18 @@ function queryStringify(data) {
 }
 
 export class HTTPTransport {
-  get = (url, options = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+  get = (url: string, options: RequestOptions = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
 
-  put = (url, options = {}) => this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+  put = (url: string, options: RequestOptions = {}) => this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
 
-  post = (url, options = {}) => this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+  post = (url: string, options: RequestOptions = {}) => this.request(url, { ...options, method: METHODS.POST }, options.timeout);
 
-  delete = (url, options = {}) => this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  delete = (url: string, options: RequestOptions = {}) => this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
 
-  request = (url, options, timeout = 5000) => {
+  request = (url: string, options: RequestOptions, timeout = 5000) => {
     const { headers = {}, method, data } = options;
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject)  => {
       if (!method) {
         reject('No method');
         return;
