@@ -2,7 +2,7 @@ import EventBus from "./EventBus";
 import Handlebars from "handlebars";
 
 interface Props {
-  [key: string]: any;
+  [key: string]: any;  //
   attr?: Record<string, string>;
   events?: Record<string, EventListener>;
 }

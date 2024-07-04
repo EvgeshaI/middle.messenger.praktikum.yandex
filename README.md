@@ -8,7 +8,7 @@
 ## Netlify
 domain: meek-baklava-757142
 ##  Прадварительый просмотр
-(https://6686b813d56a830008a77b84--meek-baklava-757142.netlify.app/)
+(https://deploy-preview-5--meek-baklava-757142.netlify.app/)
 
 ## Установка
 - `npm install` — установка стабильной версии,
