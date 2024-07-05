@@ -1,16 +1,25 @@
 {
-  "extends": ["airbnb-base", "plugin:@typescript-eslint"],
+  "extends": [
+    "airbnb-base",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint"
   ],
   "rules": {
-    "max-len": [2, 100],
+    "max-len": [
+      2,
+      100
+    ],
     "@typescript-eslint/no-unused-vars": 2,
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-undef": "off",
-    "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": true
-    }]
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ]
   }
 }
