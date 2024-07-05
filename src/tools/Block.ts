@@ -17,7 +17,8 @@ export default class Block {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
-    FLOW_RENDER: "flow:render"
+    FLOW_RENDER: "flow:render",
+    FLOW_WILL_UNMOUNT: "flow:component-will-unmount"
   };
 
   _element: HTMLElement | null = null;
@@ -42,6 +43,12 @@ export default class Block {
     const {events = {}} = this.props;
     Object.keys(events).forEach(eventName => {this._element!.addEventListener(eventName, events[eventName])} );
 
+  }
+  _removeEvents() {
+    const {events = {}} = this.props;
+    Object.keys(events).forEach(eventName => {
+      this._element!.removeEventListener(eventName, events[eventName]);
+    });
   }
 
   _registerEvents(eventBus: EventBus) {
@@ -76,6 +83,20 @@ export default class Block {
 
   componentDidUpdate(_oldProps?: Props, _newProps?: Props) {
     return true;
+  }
+
+  _componentWillUnmount() {
+    this._removeEvents();
+    this.componentWillUnmount();
+    Object.values(this.children).forEach(child => {
+      child.dispatchComponentWillUnmount();
+    });
+  }
+
+  componentWillUnmount() {}
+
+  dispatchComponentWillUnmount() {
+    this.eventBus().emit(Block.EVENTS.FLOW_WILL_UNMOUNT);
   }
 
   _getChildrenPropsAndProps(propsAndChildren: PropsWithChildren) {
