@@ -5,7 +5,18 @@
     "max-len": [2, 100],
     "@typescript-eslint/no-unused-vars": 2,
     "@typescript-eslint/no-non-null-assertion": "off",
+    "eslint-comments/no-aggregating-enable": "error",
+    "eslint-comments/no-duplicate-disable": "error",
+    "eslint-comments/no-unlimited-disable": "error",
     "eslint-comments/no-unused-disable": "error",
+    "eslint-comments/no-use": "off",
+    "eslint-comments/require-description": [
+      "error",
+      {
+        "ignore": ["eslint-enable"],
+        "applyDefaultIgnorePatterns": true
+      }
+    ],
     "no-undef": "off",
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": true
