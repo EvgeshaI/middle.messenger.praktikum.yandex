@@ -1,12 +1,13 @@
 {
   "extends": "airbnb-base",
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["plugin:@typescript-eslint/recommended"],
   "rules": {
     "max-len": [2, 100],
     "@typescript-eslint/no-unused-vars": 2,
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-undef": "off",
+    "@typescript-eslint/ban-ts-comment": "error",
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": true
     }]
