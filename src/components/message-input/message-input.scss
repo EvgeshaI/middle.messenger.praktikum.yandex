@@ -3,21 +3,28 @@
 .messageInputContainer{
   height: fit-content;
   border-radius: 25px;
+
   @include flexElement (row);
+
   padding: 5px 10px;
+
   .blockInput1{
     width: 5%;
   }
+
   .blockInput2{
     width: 80%;
   }
+
   .blockInput3{
     width: 10%;
   }
+
   .iconMessageInput{
     width: 25px;
     cursor: pointer;
   }
+
   .message{
     width: 100%;
     padding: 10px 5px 0;
