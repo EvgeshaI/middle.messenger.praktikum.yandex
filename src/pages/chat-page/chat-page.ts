@@ -13,7 +13,8 @@ export default class ChatPage extends Block {
             navbar: new Navbar(),
             searchImg: new ImageComponent({
                 alt: "search",
-                url: "../../static/svg/search.svg"
+                url: "../../static/svg/search.svg",
+                onClick: () => console.log("search chat")
             }),
             inputSearch: new Input({
                 placeholder: "search",
