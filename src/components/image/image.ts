@@ -9,7 +9,11 @@ export default class ImageComponent extends Block {
                 alt: props.alt,
                 src: props.url,
                 class: props.className ? props.className : ""
+            },
+            events: {
+                click: () => props.onClick()
             }
+
         })
     }
     render() {

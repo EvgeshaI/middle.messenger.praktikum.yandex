@@ -14,7 +14,8 @@ export default class UserSettingsPage extends FormFunctions {
             avatar: new Avatar(),
             photoImg: new ImageComponent({
                 alt: "camera",
-                url: "../../static/svg/camera.svg"
+                url: "../../static/svg/camera.svg",
+                onClick: () => console.log("load photo")
             }),
             nameInput: new SettingsInput({
                 title: "Name",

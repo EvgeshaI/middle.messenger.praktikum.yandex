@@ -7,9 +7,24 @@ export default class MessageInput extends Block {
     constructor() {
         super({
             messageText: new MessageTextarea({className: "message"}),
-            iconFile: new ImageComponent({alt: "addfile", url: "../../static/svg/addfile.svg", className: "iconMessageInput"}),
-            iconEmoji: new ImageComponent({alt: "emoji", url: "../../static/svg/emoji.svg", className: "iconMessageInput"}),
-            iconCamera: new ImageComponent({alt: "camera", url: "../../static/svg/camera.svg", className: "iconMessageInput"})
+            iconFile: new ImageComponent({
+                alt: "addfile",
+                url: "../../static/svg/addfile.svg",
+                className: "iconMessageInput",
+                onClick: () => console.log("load file")
+            }),
+            iconEmoji: new ImageComponent({
+                alt: "emoji",
+                url: "../../static/svg/emoji.svg",
+                className: "iconMessageInput",
+                onClick: () => console.log("chose emoji")
+            }),
+            iconCamera: new ImageComponent({
+                alt: "camera",
+                url: "../../static/svg/camera.svg",
+                className: "iconMessageInput",
+                onClick: () => console.log("load image")
+            })
         })
     }
 

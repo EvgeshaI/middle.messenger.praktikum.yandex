@@ -7,7 +7,8 @@ export default class Avatar extends Block {
         super({
             image: new ImageComponent({
                 alt: "avatar",
-                url: "https://doodleipsum.com/700/avatar?i=7aa650776eee7ca68a32d5d808fc4f57"
+                url: "https://doodleipsum.com/700/avatar?i=7aa650776eee7ca68a32d5d808fc4f57",
+                onClick: () => console.log("avatar")
             })
         })
     }

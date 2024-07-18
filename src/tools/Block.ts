@@ -2,7 +2,7 @@ import EventBus from "./EventBus";
 import Handlebars from "handlebars";
 
 interface Props {
-  [key: string]: any;  //
+  [key: string]: any;
   attr?: Record<string, string>;
   events?: Record<string, EventListener>;
 }
@@ -209,13 +209,6 @@ export default class Block {
 
   _createDocumentElement(tagName: string): HTMLElement {
     return document.createElement(tagName);
-  }
-
-  navigateToPage(PageClass: typeof Block, propsText?: string) {
-    const pageInstance = new PageClass(propsText ? {text: propsText} : {});
-    const container = document.getElementById('app')!;
-    container.innerHTML = '';
-    container.append(pageInstance.getContent()!);
   }
 
   show() {

@@ -5,8 +5,8 @@ import LinkText from "../../components/link-text/link-text";
 import '../login-page/login-page.scss';
 import ValidateText from "../../components/validate-text/validate-text";
 import FormFunctions from "../../tools/FormFunctions";
-import LoginPage from "../login-page/login-page";
-import ChatPage from "../chat-page/chat-page";
+import Router from "../../tools/Router";
+import {HTTPTransport} from "../../tools/Requests";
 
 export default class RegisterPage extends FormFunctions {
     constructor() {
@@ -98,12 +98,15 @@ export default class RegisterPage extends FormFunctions {
                 events: {
                     click: (e: Event) => {
                         e.preventDefault();
-                        this.navigateToPage(LoginPage);
+                        this.navigateToLogin()
                     }
                 }
             })
         })
     }
+    router = new Router("app");
+
+    httpTransport = new HTTPTransport()
 
     handleSubmit(event: Event) {
         event.preventDefault();
@@ -116,18 +119,50 @@ export default class RegisterPage extends FormFunctions {
         const isCorrectPassword = this.inputField("password").value === this.inputField("confirm_password").value
         if(allIsValid && isCorrectPassword) {
             const formData = {
-                firstName: this.inputField("first_name").value,
-                secondName: this.inputField("second_name").value,
-                email: this.inputField("email").value,
-                phone: this.inputField("phone").value,
+                first_name: this.inputField("first_name").value,
+                second_name: this.inputField("second_name").value,
                 login : this.inputField("login").value,
+                email: this.inputField("email").value,
                 password: this.inputField("password").value,
+                phone: this.inputField("phone").value,
             }
-            console.log(formData)
-            this.navigateToPage(ChatPage)
+            const options = {
+                credentials: 'include',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: JSON.stringify(formData)
+            }
+            const userOptions = {
+                credentials: 'include',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+            this.httpTransport.post('https://ya-praktikum.tech/api/v2/auth/signup', options)
+                .then(response => {
+                    console.log(formData)
+                    if(response.status >= 200 && response.status < 300){
+                        this.router.go("/messenger")
+                        return this.httpTransport.get('https://ya-praktikum.tech/api/v2/auth/user', userOptions)
+                    }else {
+                        throw new Error('Failed to signup');
+                    }
+                })
+                .then(userResponse => {
+                    console.log('User data:', userResponse);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }else {
             this.errorElement().style.visibility = "initial"
         }
+    }
+    navigateToLogin () {
+        this.router.go("/")
     }
 
     override render() {
