@@ -1,12 +1,13 @@
-import Title from "../../components/title/title";
-import ButtonComponent from "../../components/button/button";
-import Input from "../../components/input/input";
-import LinkText from "../../components/link-text/link-text";
+import Title from "../../../components/title/title";
+import ButtonComponent from "../../../components/button/button";
+import Input from "../../../components/input/input";
+import LinkText from "../../../components/link-text/link-text";
 import './login-page.scss';
-import ValidateText from "../../components/validate-text/validate-text";
-import FormFunctions from "../../tools/FormFunctions";
-import Router from "../../tools/Router";
-import {HTTPTransport} from "../../tools/Requests";
+import ValidateText from "../../../components/validate-text/validate-text";
+import FormFunctions from "../../../tools/FormFunctions";
+import Router from "../../../tools/Router";
+import ApiService from "../apiLogin";
+import store, {IUser} from "../../../tools/Store";
 
 export default class LoginPage extends FormFunctions {
     constructor() {
@@ -25,6 +26,7 @@ export default class LoginPage extends FormFunctions {
                 className: "inputStyle",
                 name: "login",
                 title: "login",
+                value: "",
                 events: {
                     input: () => { this.changeInput( "login")},
                     blur: (e) => this.validateLogin(e)
@@ -36,12 +38,15 @@ export default class LoginPage extends FormFunctions {
                 name: "password",
                 type: "password",
                 title: "password",
+                value: "",
                 events: {
                     input: () => { this.changeInput("password")},
                     blur: (e) => this.validatePassword(e)
                 }
             }),
-            errorText: new ValidateText({text: "incorrect login or password"}),
+            errorText: new ValidateText({
+                text: "incorrect login or password"
+            }),
             link: new LinkText({
                 text: "Create account",
                 events: {
@@ -54,36 +59,40 @@ export default class LoginPage extends FormFunctions {
         })
     }
     router = new Router("app");
+    apiService = new ApiService();
 
-    httpTransport = new HTTPTransport()
-
-    handleSubmit(event: Event) {
+    handleSubmit(event: Event): void {
         event.preventDefault();
         if(this.validateLogin(event) && this.validatePassword(event)) {
             const formData = {
                 login : this.inputField("login").value,
                 password: this.inputField("password").value
             }
-            const options = {
-                credentials: 'include',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                data: JSON.stringify(formData)
-            }
-            this.httpTransport.post('https://ya-praktikum.tech/api/v2/auth/signin', options)
+            this.apiService.login(formData)
                 .then(response => {
-                    console.log(formData)
-                    if(response.status >= 200 && response.status < 300){
-                        this.router.go("/messenger")
+                    const res = response as Response
+                    if (this.apiService.isResponseStatus(res.status)) {
+                        return this.apiService.getUser()
+
+                    } else {
+                        throw new Error('Failed to signin');
                     }
+                })
+                .then(userResponse => {
+                    const xhr = userResponse as XMLHttpRequest;
+                    const userInfo = JSON.parse(xhr.responseText) as IUser;
+                    localStorage.setItem("user", xhr.responseText);
+                        store.dispatch({
+                            type: 'SET_USER',
+                            user: userInfo
+                        });
+                        this.router.go("/messenger");
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
-
-        }else {
+        }
+        else {
             this.errorElement().style.visibility = "initial"
         }
     }

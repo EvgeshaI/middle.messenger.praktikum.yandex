@@ -14,3 +14,20 @@
       font-size: 16px;
     }
 }
+
+.inputChat {
+    background: #FFF;
+    margin-top: 10px;
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid #B4ABAB;
+    padding: 10px;
+    width: 70%;
+    height: 40px;
+    outline: none;
+
+    &::placeholder {
+        color: #B4ABAB;
+        font-size: 16px;
+    }
+}

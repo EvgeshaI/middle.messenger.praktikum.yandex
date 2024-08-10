@@ -9,11 +9,9 @@ export default class ChatItem extends Block {
             name: props.name,
             message: props.message,
             unread: props.unread,
-            time: props.time
+            time: props.time,
         })
     }
-
-
 
      render () {
         return `<li class="chatItem"> 

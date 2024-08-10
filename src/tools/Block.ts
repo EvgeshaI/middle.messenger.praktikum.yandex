@@ -60,6 +60,7 @@ export default class Block {
 
   init() {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
   _componentDidMount() {
@@ -140,7 +141,6 @@ export default class Block {
   }
 
   _render() {
-    console.log("Render")
     const propsAndStubs = { ...this.props };
     const _tmpId =  Math.floor(100000 + Math.random() * 900000);
     Object.entries(this.children).forEach(([key, child]) => {

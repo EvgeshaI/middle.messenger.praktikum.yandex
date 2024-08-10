@@ -20,6 +20,7 @@ interface Options {
   headers?: Record<string, string>;
   data?: any;
   timeout?: number;
+  options?: any
 }
 
 function queryStringify(data: Record<string, any>): string  {
@@ -75,6 +76,7 @@ export class HTTPTransport {
         xhr.setRequestHeader(key, headers[key]);
       });
 
+      xhr.withCredentials = true
       xhr.onload = function () {
         resolve(xhr);
       };

@@ -15,7 +15,7 @@
   @include flexElement (row);
 
   .chatList{
-    width: 30%;
+    width: 33%;
     height: $heightScreen;
 
     @include flexElement (column);
@@ -67,12 +67,29 @@
       }
 
       ul {
+        height: 400px;
+        overflow: scroll;
         background: inherit;
       }
     }
 
     .list{
       background: $backgroundBlock;
+    }
+  }
+
+  .chatTitle{
+    display: flex;
+  }
+
+  .inputChatBlock{
+    display: flex;
+    flex-direction: row !important;
+    visibility: hidden;
+
+    img{
+      background: inherit;
+      cursor: pointer;
     }
   }
 
@@ -84,5 +101,62 @@
     @include flexElement (column);
 
     align-items: initial;
+
+    .messageInputContainer{
+      background: inherit;
+      visibility: hidden;
+      display: flex;
+      align-items: center;
+
+      .message{
+        width: 90%;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+        outline: none;
+      }
+
+      img{
+        margin-left: 20px;
+        background: inherit;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .headerChat{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: inherit;
+
+    .noneElement{
+      display: none;
+    }
+
+    img{
+      background: inherit;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+
+    input {
+      width: 300px;
+      margin-left: 20px;
+    }
+
+    .usersContainer{
+      width: 150px;
+      height: 40px;
+      overflow: scroll;
+    }
+  }
+
+  .messagesBlock{
+    height: 80%;
+    overflow: scroll;
+    background: inherit;
+    padding: 20px;
   }
 }
+

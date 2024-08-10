@@ -1,6 +1,10 @@
 export interface IChatItemPropsType {
+    id: number,
     name: string,
     message: string | null,
-    unread: string | null,
-    time: string
+    unread: number | null,
+    time: string,
+    events: {
+        click: () => void
+    }
 }

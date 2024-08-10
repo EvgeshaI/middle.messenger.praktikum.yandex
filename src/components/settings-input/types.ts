@@ -4,7 +4,8 @@ export interface ISettingInputPropsType {
     className?: string,
     title: string,
     type?: string,
-    name: string
+    name: string,
+    value: string
     onChange: () => void,
     onBlur: (e:Event) => void
 }

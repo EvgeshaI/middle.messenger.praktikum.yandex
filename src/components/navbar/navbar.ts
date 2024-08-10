@@ -4,11 +4,14 @@ import ImageComponent from "../image/image";
 import './navbar.scss'
 import Router from "../../tools/Router";
 import {HTTPTransport} from "../../tools/Requests";
+import {IAvatarProps} from "../avatar/types";
 
 export default class Navbar extends Block {
-    constructor() {
+    constructor(props: IAvatarProps) {
         super({
-            avatar: new Avatar(),
+            avatar: new Avatar({
+                url: props.url
+            }),
             homeImg: new ImageComponent({
                 alt: "home",
                 url: "../../static/svg/home.svg",
@@ -50,13 +53,21 @@ export default class Navbar extends Block {
         }
         this.httpTransport.post('https://ya-praktikum.tech/api/v2/auth/logout', options)
             .then(response => {
-                if(response.status >= 200 && response.status < 300){
+                const res = response as XMLHttpRequest;
+                if(res.status >= 200 && res.status < 300){
+                    localStorage.removeItem("user")
                     this.router.go("/")
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
+    }
+    componentDidUpdate(oldProps: IAvatarProps, newProps: IAvatarProps) {
+        if (oldProps.url !== newProps.url) {
+            this.children.avatar.setProps({url: newProps.url})
+        }
+        return true;
     }
 
     override render() {

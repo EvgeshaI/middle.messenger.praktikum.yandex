@@ -1,12 +1,13 @@
-import Title from "../../components/title/title";
-import ButtonComponent from "../../components/button/button";
-import Input from "../../components/input/input";
-import LinkText from "../../components/link-text/link-text";
+import Title from "../../../components/title/title";
+import ButtonComponent from "../../../components/button/button";
+import Input from "../../../components/input/input";
+import LinkText from "../../../components/link-text/link-text";
 import '../login-page/login-page.scss';
-import ValidateText from "../../components/validate-text/validate-text";
-import FormFunctions from "../../tools/FormFunctions";
-import Router from "../../tools/Router";
-import {HTTPTransport} from "../../tools/Requests";
+import ValidateText from "../../../components/validate-text/validate-text";
+import FormFunctions from "../../../tools/FormFunctions";
+import Router from "../../../tools/Router";
+import ApiService from "../apiLogin";
+import store, {IUser} from "../../../tools/Store";
 
 export default class RegisterPage extends FormFunctions {
     constructor() {
@@ -25,6 +26,7 @@ export default class RegisterPage extends FormFunctions {
                 className: "inputStyle",
                 name: "email",
                 title: "email",
+                value: "",
                 events: {
                     input: () => { this.changeInput("email")},
                     blur: (e) => this.validateEmail(e)
@@ -35,6 +37,7 @@ export default class RegisterPage extends FormFunctions {
                 className: "inputStyle",
                 name: "login",
                 title: "login",
+                value: "",
                 events: {
                     input: () => { this.changeInput("login")},
                     blur: (e) => this.validateLogin(e)
@@ -45,6 +48,7 @@ export default class RegisterPage extends FormFunctions {
                 className: "inputStyle",
                 name: "first_name",
                 title: "first_name",
+                value: "",
                 events: {
                     input: () => { this.changeInput("first_name")},
                     blur: (e) => this.validateName(e, "first_name")
@@ -55,6 +59,7 @@ export default class RegisterPage extends FormFunctions {
                 className: "inputStyle",
                 name: "second_name",
                 title: "second_name",
+                value: "",
                 events: {
                     input: () => { this.changeInput("second_name")},
                     blur: (e) => this.validateName(e, "second_name")
@@ -65,6 +70,7 @@ export default class RegisterPage extends FormFunctions {
                 className: "inputStyle",
                 name: "phone",
                 title: "phone",
+                value: "",
                 events: {
                     input: () => { this.changeInput("phone")},
                     blur: (e) => this.validatePhone(e)
@@ -76,6 +82,7 @@ export default class RegisterPage extends FormFunctions {
                 name: "password",
                 type: "password",
                 title: "password",
+                value: "",
                 events: {
                     input: () => { this.changeInput("password")},
                     blur: (e) => this.validatePassword(e)
@@ -87,6 +94,7 @@ export default class RegisterPage extends FormFunctions {
                 name: "confirm_password",
                 type: "password",
                 title: "confirm_password",
+                value: "",
                 events: {
                     input: () => { this.changeInput("confirm_password")},
                     blur: (e) => this.validatePassword(e)
@@ -105,8 +113,7 @@ export default class RegisterPage extends FormFunctions {
         })
     }
     router = new Router("app");
-
-    httpTransport = new HTTPTransport()
+    apiService = new ApiService();
 
     handleSubmit(event: Event) {
         event.preventDefault();
@@ -126,33 +133,26 @@ export default class RegisterPage extends FormFunctions {
                 password: this.inputField("password").value,
                 phone: this.inputField("phone").value,
             }
-            const options = {
-                credentials: 'include',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                data: JSON.stringify(formData)
-            }
-            const userOptions = {
-                credentials: 'include',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
-            this.httpTransport.post('https://ya-praktikum.tech/api/v2/auth/signup', options)
+            this.apiService.register(formData)
                 .then(response => {
-                    console.log(formData)
-                    if(response.status >= 200 && response.status < 300){
-                        this.router.go("/messenger")
-                        return this.httpTransport.get('https://ya-praktikum.tech/api/v2/auth/user', userOptions)
-                    }else {
+                    const res = response as Response
+                    if (this.apiService.isResponseStatus(res.status)) {
+                        return this.apiService.getUser();
+                    } else {
                         throw new Error('Failed to signup');
                     }
                 })
                 .then(userResponse => {
-                    console.log('User data:', userResponse);
+                    const xhr = userResponse as XMLHttpRequest;
+                    if (this.apiService.isResponseStatus(xhr.status)) {
+                        const userInfo = JSON.parse(xhr.responseText) as IUser;
+                        localStorage.setItem("user", xhr.responseText)
+                        store.dispatch({
+                            type: 'SET_USER',
+                            user: userInfo
+                        });
+                        this.router.go("/messenger");
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
