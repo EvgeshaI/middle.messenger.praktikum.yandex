@@ -12,6 +12,9 @@ app.use(express.static(DIST_DIR));
 app.get('/', (req, res) => {
     res.sendFile(path.join(DIST_DIR, 'index.html'));
 });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(DIST_DIR, 'index.html'));
+});
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
