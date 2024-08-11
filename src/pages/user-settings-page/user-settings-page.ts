@@ -174,6 +174,9 @@ export default class UserSettingsPage extends FormFunctions {
                     });
                 }
             })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }else {
             this.errorElement().style.visibility = "initial"
         }
@@ -193,6 +196,9 @@ export default class UserSettingsPage extends FormFunctions {
                     confirmText.style.visibility = "initial"
                 }
             })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
     }
     changeAvatar(e: Event) {
@@ -212,7 +218,10 @@ export default class UserSettingsPage extends FormFunctions {
                         user: userInfo
                     });
                 }
-            });
+            })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
     }
     override render() {

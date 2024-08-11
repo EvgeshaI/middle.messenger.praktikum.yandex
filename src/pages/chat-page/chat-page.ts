@@ -123,6 +123,9 @@ export default class ChatPage extends Block {
                     chats: chats
                 });
             })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     inputChatBlock () {
@@ -225,6 +228,9 @@ export default class ChatPage extends Block {
                 this.inputField("inputUserLogin").value = ""
                 return this.apiService.addUserToChat(user)
             })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     deleteUsersOnChat () {
@@ -240,6 +246,9 @@ export default class ChatPage extends Block {
                 chatId: chatId
             });
         })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     chooseChat(chat: IChat) {
@@ -256,6 +265,9 @@ export default class ChatPage extends Block {
                     token: token
                 });
                 this.initializeWebSocket(token);
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
 
         this.apiService.getUsersInChat(chat.id)
@@ -267,6 +279,9 @@ export default class ChatPage extends Block {
                     usersId: usersId
                 });
             })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     sendMessage () {

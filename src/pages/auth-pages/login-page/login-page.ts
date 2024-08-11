@@ -75,7 +75,7 @@ export default class LoginPage extends FormFunctions {
                         return this.apiService.getUser()
 
                     } else {
-                        throw new Error('Failed to signin');
+                        return Promise.reject(res);
                     }
                 })
                 .then(userResponse => {
@@ -89,7 +89,11 @@ export default class LoginPage extends FormFunctions {
                         this.router.go("/messenger");
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    const errText = JSON.parse(error.responseText).reason
+                    if(errText === "User already in system"){
+                        this.router.go("/messenger");
+                    }
+                    console.log(error)
                 });
         }
         else {
