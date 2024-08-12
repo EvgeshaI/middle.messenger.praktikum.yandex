@@ -26,19 +26,24 @@ export default class ApiServiceChat {
             limit: 15,
             title: ""
         }
-        return this.httpTransport.get('https://ya-praktikum.tech/api/v2/chats', {...this.options, data: params})
+        const chatsUrl = new HTTPTransport('/chats').BASE_URL
+        return this.httpTransport.get(chatsUrl, {...this.options, data: params})
     }
     addNewChat (formData: IAddChat) {
-        return this.httpTransport.post('https://ya-praktikum.tech/api/v2/chats', {... this.options, data: JSON.stringify(formData)})
+        const chatsUrl = new HTTPTransport('/chats').BASE_URL
+        return this.httpTransport.post(chatsUrl, {... this.options, data: JSON.stringify(formData)})
     }
     getToken (chatId: number) {
-        return this.httpTransport.post(`https://ya-praktikum.tech/api/v2/chats/token/${chatId}`, {... this.options})
+        const tokenUrl = new HTTPTransport(`/chats/token/${chatId}`).BASE_URL
+        return this.httpTransport.post(tokenUrl, {... this.options})
     }
     findUserRequest (formData: IFindUser) {
-        return this.httpTransport.post('https://ya-praktikum.tech/api/v2/user/search', {... this.options, data: JSON.stringify(formData)})
+        const searchUrl = new HTTPTransport(`/user/search`).BASE_URL
+        return this.httpTransport.post(searchUrl, {... this.options, data: JSON.stringify(formData)})
     }
     addUserToChat (usersRequest: IUsersInChat) {
-        return this.httpTransport.put('https://ya-praktikum.tech/api/v2/chats/users', {... this.options, data: JSON.stringify(usersRequest)})
+        const usersUrl = new HTTPTransport(`/chats/users`).BASE_URL
+        return this.httpTransport.put(usersUrl, {... this.options, data: JSON.stringify(usersRequest)})
     }
     getUsersInChat (chatId: number) {
         const params = {
@@ -47,9 +52,11 @@ export default class ApiServiceChat {
             name: "",
             email: ""
         }
-        return this.httpTransport.get(`https://ya-praktikum.tech/api/v2/chats/${chatId}/users`, {... this.options, data: params})
+        const usersInChatUrl = new HTTPTransport(`/chats/${chatId}/users`).BASE_URL
+        return this.httpTransport.get(usersInChatUrl, {... this.options, data: params})
     }
     deleteUsers (data: IUsersInChat) {
-        return this.httpTransport.delete(`https://ya-praktikum.tech/api/v2/chats/users`, {... this.options, data: JSON.stringify(data)})
+        const usersUrl = new HTTPTransport(`/chats/users`).BASE_URL
+        return this.httpTransport.delete(usersUrl, {... this.options, data: JSON.stringify(data)})
     }
 }

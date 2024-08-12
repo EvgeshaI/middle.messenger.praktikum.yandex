@@ -27,6 +27,7 @@ if (storedUser) {
         type: 'SET_USER',
         user: user
     });
+    router.go("/messenger")
 } else {
     router.go("/");
 }

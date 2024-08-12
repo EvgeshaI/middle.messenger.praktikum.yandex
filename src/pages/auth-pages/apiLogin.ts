@@ -15,6 +15,7 @@ export interface IRegisterFormData {
 
 export default class ApiService {
     httpTransport = new HTTPTransport();
+    // baseUrl = this.httpTransport.BASE_URL
     options = {
         credentials: 'include',
         mode: 'cors',
@@ -35,14 +36,17 @@ export default class ApiService {
                 'Content-Type': 'application/json',
             },
         };
-        return this.httpTransport.post('https://ya-praktikum.tech/api/v2/auth/signin', {...options, data: JSON.stringify(formData)});
+        const loginUrl = new HTTPTransport('/auth/signin').BASE_URL
+        return this.httpTransport.post(loginUrl, {...options, data: JSON.stringify(formData)});
     }
 
     register(formData: IRegisterFormData) {
-        return this.httpTransport.post('https://ya-praktikum.tech/api/v2/auth/signup', {...this.options, data: JSON.stringify(formData)})
+        const registerUrl = new HTTPTransport('/auth/signup').BASE_URL
+        return this.httpTransport.post(registerUrl, {...this.options, data: JSON.stringify(formData)})
     }
 
     getUser() {
-        return this.httpTransport.get('https://ya-praktikum.tech/api/v2/auth/user', this.options);
+        const userUrl = new HTTPTransport('/auth/user').BASE_URL
+        return this.httpTransport.get(userUrl, this.options);
     }
 }

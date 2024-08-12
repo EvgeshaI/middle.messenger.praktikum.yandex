@@ -9,6 +9,7 @@ import ValidateText from "../../components/validate-text/validate-text";
 import ApiServiceSettings from "./apiSettings";
 import store, {IUser, State} from "../../tools/Store";
 import Input from "../../components/input/input";
+import {HTTPTransport} from "../../tools/Requests";
 
 export default class UserSettingsPage extends FormFunctions {
     constructor() {
@@ -130,18 +131,21 @@ export default class UserSettingsPage extends FormFunctions {
     }
     apiService = new ApiServiceSettings();
 
+
     componentDidUpdate (oldProps: State, newProps: State) {
         if (oldProps.user !== newProps.user){
             const user = newProps.user
             if(user){
+                const urlForResource = new HTTPTransport(`/resources/${user.avatar}`).BASE_URL
+
                 this.children.nameInput.setProps({value: user.first_name})
                 this.children.secondNameInput.setProps({value: user.second_name})
                 this.children.displayNameInput.setProps({value: user.display_name})
                 this.children.emailInput.setProps({value: user.email})
                 this.children.loginInput.setProps({value: user.login})
                 this.children.phoneInput.setProps({value: user.phone})
-                this.children.avatar.setProps({url: `https://ya-praktikum.tech/api/v2/resources/${user.avatar}`})
-                this.children.navbar.setProps({url: `https://ya-praktikum.tech/api/v2/resources/${user.avatar}`})
+                this.children.avatar.setProps({url: urlForResource})
+                this.children.navbar.setProps({url: urlForResource})
             }
         }
         return true

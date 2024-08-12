@@ -76,8 +76,18 @@ export interface State {
     user: IUser | null,
     token: string | null,
     messages: Array<IMessage>,
-    usersId: Array<number>
+    usersId: Array<number>,
+    usersInChat: Array<IUser>
 }
+let state: State = {
+    chats: [],
+    user: null,
+    currentChat: null,
+    token: null,
+    messages: [],
+    usersId: [],
+    usersInChat: []
+};
 
 const reducer = (state: State, action: Action) => {
     let newState = deepCopy(state);
@@ -97,8 +107,8 @@ const reducer = (state: State, action: Action) => {
         case 'SET_TOKEN':
             newState.token = action.token;
             return newState;
-        case 'SET_USERS_ID':
-            newState.usersId = action.usersId
+        case 'SET_USERS':
+            newState.usersInChat = action.users
             return newState
         case 'DELETE_USERS':
             newState.chats = newState.chats.filter(chat => chat.id !== action.chatId)
@@ -127,14 +137,6 @@ const reducer = (state: State, action: Action) => {
     }
 };
 
-let state: State = {
-    chats: [],
-    user: null,
-    currentChat: null,
-    token: null,
-    messages: [],
-    usersId: []
-};
 
   let store = Object.freeze(createStore(reducer, state));
 

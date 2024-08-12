@@ -9,6 +9,8 @@ import ButtonComponent from "../../components/button/button";
 import store, {IChat, IUser, State} from "../../tools/Store";
 import ApiServiceChat from "./apiChat";
 import Message from "../../components/message/message";
+import {HTTPTransport} from "../../tools/Requests";
+import UserInChat from "../../components/userInChat/userInChat";
 
 export default class ChatPage extends Block {
     constructor() {
@@ -62,14 +64,6 @@ export default class ChatPage extends Block {
                     this.addUser()
                 }
             }),
-            iconDeleteUsersChat: new ImageComponent({
-                alt: "addUser",
-                url: "../../static/svg/delete.svg",
-                className: "noneElement",
-                onClick: () => {
-                    this.deleteUsersOnChat()
-                }
-            }),
             iconCheck: new ImageComponent({
                 alt: "check",
                 url: "../../static/svg/check.svg",
@@ -109,6 +103,7 @@ export default class ChatPage extends Block {
             }),
             chatsList: [],
             messages: [],
+            users: []
         })
     }
 
@@ -233,24 +228,6 @@ export default class ChatPage extends Block {
             });
     }
 
-    deleteUsersOnChat () {
-        const usersId = store.getState().usersId
-        const chatId = store.getState().currentChat!.id
-        const data = {
-            users: usersId,
-            chatId: chatId
-        }
-        this.apiService.deleteUsers(data).then(() => {
-            store.dispatch({
-                type: 'DELETE_USERS',
-                chatId: chatId
-            });
-        })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
     chooseChat(chat: IChat) {
         store.dispatch({
             type: 'SET_CURRENT_CHAT',
@@ -273,10 +250,10 @@ export default class ChatPage extends Block {
         this.apiService.getUsersInChat(chat.id)
             .then(r => {
                 const xhr = r as XMLHttpRequest;
-                const usersId = JSON.parse(xhr.responseText).map((el: IUser) => el.id) as Array<number>
+                const users = JSON.parse(xhr.responseText) as Array<IUser>
                 store.dispatch({
-                    type: 'SET_USERS_ID',
-                    usersId: usersId
+                    type: 'SET_USERS',
+                    users: users
                 });
             })
             .catch(error => {
@@ -286,14 +263,26 @@ export default class ChatPage extends Block {
 
     sendMessage () {
         const message = this.inputField("message").value
-        this.socket!.send(JSON.stringify({
-            content: message,
-            type: 'message',
-        }))
-        this.inputField("message").value = ""
+        if(message !== ""){
+            this.socket!.send(JSON.stringify({
+                content: message,
+                type: 'message',
+            }))
+            this.inputField("message").value = ""
+        }
     }
 
     componentDidUpdate(oldProps: State, newProps: State) {
+        if(oldProps.usersInChat !== newProps.usersInChat){
+            this.lists.users = store.getState().usersInChat.map(user => {
+                    return new UserInChat({
+                        text: user.login,
+                        chatId: store.getState().currentChat!.id,
+                        userId: user.id
+                    })
+                }
+            );
+        }
         if (oldProps.chats !== newProps.chats) {
             this.lists.chatsList = store.getState().chats.map(chat => {
                 const lastMessage = chat.last_message ? `${chat.last_message.content.slice(0, 20)}...` : ""
@@ -315,7 +304,8 @@ export default class ChatPage extends Block {
         if (oldProps.user !== newProps.user){
             const user = newProps.user
             if(user){
-                this.children.navbar.setProps({url: `https://ya-praktikum.tech/api/v2/resources/${user.avatar}`})
+                const urlForResource = new HTTPTransport(`/resources/${user.avatar}`).BASE_URL
+                this.children.navbar.setProps({url: urlForResource})
             }
         }
         if(oldProps.currentChat !== newProps.currentChat){
@@ -323,12 +313,10 @@ export default class ChatPage extends Block {
             if(currentChat){
                 this.children.inputUserLogin.setProps({className: "inputChat"})
                 this.children.iconAddUser.setProps({className: "iconMessageInput"})
-                this.children.iconDeleteUsersChat.setProps({className: "iconMessageInput"})
                 this.children.chatTitle.setProps({text: currentChat.title})
             }else{
                 this.children.inputUserLogin.setProps({className: "noneElement"})
                 this.children.iconAddUser.setProps({className: "noneElement"})
-                this.children.iconDeleteUsersChat.setProps({className: "noneElement"})
                 this.children.chatTitle.setProps({text: ""})
             }
         }
@@ -341,10 +329,6 @@ export default class ChatPage extends Block {
                     })
                 }
             );
-            setTimeout(() => {
-                const messagesBlock = this.element!.querySelector('.messagesBlock')! as HTMLElement;
-                messagesBlock.scrollTop = messagesBlock.scrollHeight;
-            }, 0);
         }
         return true;
     }
@@ -373,18 +357,20 @@ export default class ChatPage extends Block {
                         </div>
                     </div>
                     <div class="chat" id="chat">
+                            {{{ chatTitle }}}
                         <div class="headerChat">
-                        {{{ chatTitle }}}
-                        {{{ inputUserLogin }}}
-                        {{{ iconAddUser }}}
-                        {{{ iconDeleteUsersChat }}}
+                            {{{ inputUserLogin }}}
+                            {{{ iconAddUser }}}
+                            <div class="usersBlock">
+                                {{{ users }}}
+                            </div>
                         </div>
                         <div class="messagesBlock">
-                        {{{ messages }}}
+                            {{{ messages }}}
                         </div>
                         <div class="messageInputContainer">
-                        {{{ messageInput }}}
-                        {{{ iconSendMessage }}}
+                            {{{ messageInput }}}
+                            {{{ iconSendMessage }}}
                         </div>
                     </div>
                 </main>`

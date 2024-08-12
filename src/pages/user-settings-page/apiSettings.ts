@@ -24,11 +24,13 @@ export default class ApiServiceSettings {
         },
     }
     changeUserProfile (formData: IUserInfo) {
-        return this.httpTransport.put('https://ya-praktikum.tech/api/v2/user/profile', {...this.options, data: JSON.stringify(formData)})
+        const profileUrl = new HTTPTransport('/user/profile').BASE_URL
+        return this.httpTransport.put(profileUrl, {...this.options, data: JSON.stringify(formData)})
     }
 
     changePassword (formData: IPasswords) {
-        return this.httpTransport.put('https://ya-praktikum.tech/api/v2/user/password', {...this.options, data: JSON.stringify(formData)})
+        const changePasswordUrl = new HTTPTransport('/user/password').BASE_URL
+        return this.httpTransport.put(changePasswordUrl, {...this.options, data: JSON.stringify(formData)})
     }
     changeAvatar (formData: FormData) {
         const options = {
@@ -38,6 +40,7 @@ export default class ApiServiceSettings {
                 'Content-Type': 'multipart/form-data',
             },
         }
-        return this.httpTransport.put('https://ya-praktikum.tech/api/v2/user/profile/avatar', {options, data: formData})
+        const changeAvatarUrl = new HTTPTransport('/user/profile/avatar').BASE_URL
+        return this.httpTransport.put(changeAvatarUrl, {options, data: formData})
     }
 }
