@@ -125,15 +125,15 @@
 
       .usersBlock{
         width: 250px;
-        height: 50px;
-        margin-left: 10px;
+        height: 25px;
         overflow: scroll;
+        background: inherit;
+        margin-left: 10px;
       }
     }
 
     .messageInputContainer{
       background: inherit;
-      visibility: hidden;
       display: flex;
       align-items: center;
 

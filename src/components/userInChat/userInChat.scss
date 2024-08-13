@@ -1,9 +1,13 @@
 .userInChat{
+  background: inherit;
+  color: #6E00FF;
   display: flex;
   align-items: center;
+  margin-left: auto;
 
   img {
     margin-left: 10px;
     cursor: pointer;
+    color: #6E00FF;
   }
 }

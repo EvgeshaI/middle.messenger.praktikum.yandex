@@ -110,10 +110,8 @@ const reducer = (state: State, action: Action) => {
         case 'SET_USERS':
             newState.usersInChat = action.users
             return newState
-        case 'DELETE_USERS':
-            newState.chats = newState.chats.filter(chat => chat.id !== action.chatId)
-            newState.currentChat = null
-            newState.messages = []
+        case 'DELETE_USER':
+            newState.usersInChat = newState.usersInChat.filter(user => user.id !== action.userId)
             return newState
 
         case 'ADD_MESSAGE':
@@ -131,6 +129,10 @@ const reducer = (state: State, action: Action) => {
 
         case 'ADD_OLD_MESSAGES':
             newState.messages = action.messages
+            return newState;
+
+        case 'DELETE_CHAT':
+            newState.chats = newState.chats.filter(el => el.id !== action.chatId)
             return newState;
         default:
             return state;

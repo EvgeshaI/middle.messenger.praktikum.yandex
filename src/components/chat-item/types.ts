@@ -4,7 +4,6 @@ export interface IChatItemPropsType {
     message: string | null,
     unread: number | null,
     time: string,
-    events: {
-        click: () => void
-    }
+    onClick: () => void
+
 }

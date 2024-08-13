@@ -10,6 +10,9 @@ export interface IUsersInChat {
     users: Array<number>,
     chatId: number
 }
+export interface IDeleteChat {
+    chatId: number
+}
 
 export default class ApiServiceChat {
     httpTransport = new HTTPTransport();
@@ -58,5 +61,9 @@ export default class ApiServiceChat {
     deleteUsers (data: IUsersInChat) {
         const usersUrl = new HTTPTransport(`/chats/users`).BASE_URL
         return this.httpTransport.delete(usersUrl, {... this.options, data: JSON.stringify(data)})
+    }
+    deleteChat (data: IDeleteChat) {
+        const deleteChatUrl = new HTTPTransport(`/chats`).BASE_URL
+        return this.httpTransport.delete(deleteChatUrl, {... this.options, data: JSON.stringify(data)})
     }
 }

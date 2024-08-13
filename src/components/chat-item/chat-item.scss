@@ -1,6 +1,19 @@
 @import "../../static/constantStyles";
 
+.chatItemContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: inherit;
+
+  img{
+    cursor: pointer;
+    background: inherit;
+  }
+}
+
 .chatItem{
+  width: 90%;
   display: flex;
   align-items: center;
   box-sizing: border-box;

@@ -102,8 +102,8 @@ export default class ChatPage extends Block {
                 }
             }),
             chatsList: [],
+            users: [],
             messages: [],
-            users: []
         })
     }
 
@@ -177,8 +177,6 @@ export default class ChatPage extends Block {
                     messages: messageData.reverse()
                 });
             }
-            const messageInputContainer = this.element!.querySelector(`.messageInputContainer`)! as HTMLElement;
-            messageInputContainer.style.visibility = "initial"
         });
         socket.addEventListener('error', event => {
             console.log('Ошибка', event);
@@ -194,6 +192,7 @@ export default class ChatPage extends Block {
         this.apiService.addNewChat(formData)
             .then(() => {
                 this.closeFormForChat()
+                this.inputField("chatName").value = ""
                 return this.apiService.getChats()
                     .then(r => {
                         const xhr = r as XMLHttpRequest;
@@ -208,24 +207,33 @@ export default class ChatPage extends Block {
     }
 
     addUser () {
-        const formData = {
-            login: this.inputField("inputUserLogin").value
-        }
+        const userLogin = this.inputField("inputUserLogin").value
+        if(userLogin !== ""){
+            const formData = {
+                login: this.inputField("inputUserLogin").value
+            }
 
-        this.apiService.findUserRequest(formData)
-            .then(r => {
-                const xhr = r as XMLHttpRequest;
-                const usersId = JSON.parse(xhr.responseText).map((el: IUser) => el.id) as Array<number>
-                const user = {
-                    users: usersId,
-                    chatId: store.getState().currentChat!.id
-                }
-                this.inputField("inputUserLogin").value = ""
-                return this.apiService.addUserToChat(user)
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            this.apiService.findUserRequest(formData)
+                .then(r => {
+                    const xhr = r as XMLHttpRequest;
+                    const usersId = JSON.parse(xhr.responseText).map((el: IUser) => el.id) as Array<number>
+                    const user = {
+                        users: usersId,
+                        chatId: store.getState().currentChat!.id
+                    }
+                    this.inputField("inputUserLogin").value = ""
+                    return this.apiService.addUserToChat(user).then(() => {
+                        const users = JSON.parse(xhr.responseText)
+                        store.dispatch({
+                            type: 'SET_USERS',
+                            users: users
+                        });
+                    })
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
     }
 
     chooseChat(chat: IChat) {
@@ -274,7 +282,9 @@ export default class ChatPage extends Block {
 
     componentDidUpdate(oldProps: State, newProps: State) {
         if(oldProps.usersInChat !== newProps.usersInChat){
-            this.lists.users = store.getState().usersInChat.map(user => {
+            const myId = store.getState().user?.id
+            const filterUsers =  store.getState().usersInChat.filter(el => el.id !== myId)
+            this.lists.users = filterUsers.map(user => {
                     return new UserInChat({
                         text: user.login,
                         chatId: store.getState().currentChat!.id,
@@ -292,10 +302,8 @@ export default class ChatPage extends Block {
                         message: lastMessage,
                         unread: chat.unread_count,
                         time: chat.last_message ? chat.last_message.time.slice(11, 16) : "",
-                        events: {
-                            click: () => {
+                        onClick: () => {
                                 this.chooseChat(chat)
-                            }
                         }
                     })
             }
@@ -329,6 +337,10 @@ export default class ChatPage extends Block {
                     })
                 }
             );
+            setTimeout(() => {
+                const messagesBlock = this.element!.querySelector('.messagesBlock')! as HTMLElement;
+                messagesBlock.scrollTop = messagesBlock.scrollHeight;
+            }, 0);
         }
         return true;
     }

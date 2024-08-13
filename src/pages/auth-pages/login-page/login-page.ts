@@ -73,7 +73,6 @@ export default class LoginPage extends FormFunctions {
                     const res = response as Response
                     if (this.apiService.isResponseStatus(res.status)) {
                         return this.apiService.getUser()
-
                     } else {
                         return Promise.reject(res);
                     }
