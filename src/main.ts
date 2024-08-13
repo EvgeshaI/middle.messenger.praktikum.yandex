@@ -22,12 +22,17 @@ router
 
 const storedUser = localStorage.getItem("user");
 if (storedUser) {
-    const user = JSON.parse(storedUser) as IUser;
-    store.dispatch({
-        type: 'SET_USER',
-        user: user
-    });
-    router.go("/messenger")
+    try {
+        const user = JSON.parse(storedUser) as IUser;
+        store.dispatch({
+            type: 'SET_USER',
+            user: user
+        });
+        router.go("/messenger");
+    } catch (error) {
+        console.error("Failed to parse user data:", error);
+        router.go("/");
+    }
 } else {
     router.go("/");
 }

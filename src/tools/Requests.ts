@@ -41,8 +41,7 @@ function queryStringify(data: Record<string, any>): string  {
 
 
 export class HTTPTransport {
-  BASE_URL = `https://ya-praktikum.tech/api/v2`
-
+  BASE_URL
   constructor(props?: string) {
     this.BASE_URL = `https://ya-praktikum.tech/api/v2` + props
   }

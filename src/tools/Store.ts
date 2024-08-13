@@ -133,6 +133,8 @@ const reducer = (state: State, action: Action) => {
 
         case 'DELETE_CHAT':
             newState.chats = newState.chats.filter(el => el.id !== action.chatId)
+            newState.currentChat = null
+            newState.messages = []
             return newState;
         default:
             return state;
