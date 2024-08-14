@@ -10,7 +10,8 @@
     "start": "npm run build && node server.cjs",
     "prebuild": "tsc --noEmit",
     "lint": "eslint . --fix && npx stylelint \"**/*.scss\" --fix && tsc --noEmit",
-    "test": "mocha --es-module-specifier-resolution=node"
+    "test": "mocha --es-module-specifier-resolution=node",
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">=12"
