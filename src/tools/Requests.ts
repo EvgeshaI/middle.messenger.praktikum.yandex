@@ -20,6 +20,7 @@ interface Options {
   headers?: Record<string, string>;
   data?: any;
   timeout?: number;
+  options?: any
 }
 
 function queryStringify(data: Record<string, any>): string  {
@@ -40,6 +41,10 @@ function queryStringify(data: Record<string, any>): string  {
 
 
 export class HTTPTransport {
+  BASE_URL
+  constructor(props?: string) {
+    this.BASE_URL = `https://ya-praktikum.tech/api/v2` + props
+  }
 
   createMethod(method: Methods): HTTPMethod {
     return (url: string, options: Options = {}) => (
@@ -75,6 +80,7 @@ export class HTTPTransport {
         xhr.setRequestHeader(key, headers[key]);
       });
 
+      xhr.withCredentials = true
       xhr.onload = function () {
         resolve(xhr);
       };

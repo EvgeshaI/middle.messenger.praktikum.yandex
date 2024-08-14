@@ -9,7 +9,7 @@
     "preview": "vite preview --port 3000",
     "start": "npm run build && node server.cjs",
     "prebuild": "tsc --noEmit",
-    "lint": "eslint . && npx stylelint \"**/*.scss\" && tsc --noEmit"
+    "lint": "eslint . --fix && npx stylelint \"**/*.scss\" --fix && tsc --noEmit"
   },
   "engines": {
     "node": ">=12"
@@ -36,6 +36,7 @@
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-scss": "^6.3.2",
     "vite-plugin-checker": "^0.7.0",
-    "vite-plugin-static-copy": "^1.0.5"
+    "vite-plugin-static-copy": "^1.0.5",
+    "ws": "^8.18.0"
   }
 }

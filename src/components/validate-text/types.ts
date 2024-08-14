@@ -1,3 +1,4 @@
 export interface IValidateTextPropsType {
-    text: string
+    text: string,
+    isConfirmPassword?: boolean
 }

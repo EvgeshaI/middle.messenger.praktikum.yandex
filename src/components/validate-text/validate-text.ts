@@ -7,8 +7,8 @@ export default class ValidateText extends Block {
         super({
             ...props,
             attr: {
-                class: "validate",
-                id: "error-text"
+                class: props.isConfirmPassword ? "confirmPassword" : "validate",
+                id: props.isConfirmPassword ? "confirmPassword" : "error-text"
             }
         })
     }

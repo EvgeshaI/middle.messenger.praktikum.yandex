@@ -13,6 +13,7 @@ export default class SettingsInput extends FormFunctions {
                 title: props.title,
                 type: props.type,
                 name: props.name,
+                value: props.value,
                 events: {
                     input: () => {props.onChange()},
                     blur: (e) => {props.onBlur(e)}
@@ -20,6 +21,13 @@ export default class SettingsInput extends FormFunctions {
             })
         })
     }
+    componentDidUpdate(oldProps: ISettingInputPropsType, newProps: ISettingInputPropsType) {
+        if (oldProps.value !== newProps.value) {
+            this.children.settingInput.setProps({value: newProps.value})
+        }
+        return true;
+    }
+
     render() {
         return `<div class="settingItem">
                     <div class="settingTitle">
